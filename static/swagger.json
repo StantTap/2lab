@@ -1,0 +1,139 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Barbershop Services API",
+    "version": "1.0"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/services": {
+      "get": {
+        "summary": "Получить список всех услуг",
+        "responses": {
+          "200": {
+            "description": "Список услуг",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Service" }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Добавить новую услугу",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Информация о новой услуге",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Service" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Услуга создана",
+            "schema": { "$ref": "#/definitions/Service" }
+          }
+        }
+      }
+    },
+    "/services/{service_id}": {
+      "get": {
+        "summary": "Получить услугу по ID",
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Информация об услуге",
+            "schema": { "$ref": "#/definitions/Service" }
+          },
+          "404": {
+            "description": "Услуга не найдена"
+          }
+        }
+      },
+      "put": {
+        "summary": "Обновить услугу по ID",
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Обновленные данные услуги",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Service" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Услуга обновлена",
+            "schema": { "$ref": "#/definitions/Service" }
+          },
+          "404": {
+            "description": "Услуга не найдена"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удалить услугу по ID",
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Услуга удалена"
+          },
+          "404": {
+            "description": "Услуга не найдена"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Service": {
+      "type": "object",
+      "required": ["id", "name", "price", "duration"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Стрижка мужская"
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "example": 500
+        },
+        "duration": {
+          "type": "integer",
+          "example": 30,
+          "description": "Продолжительность в минутах"
+        }
+      }
+    }
+  }
+}
